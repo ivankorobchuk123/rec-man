@@ -13,7 +13,6 @@ import { AddColumnPopup } from '@/features/addColumn';
 import { TaskVariant } from '@/app/store/types';
 import { Checkbox } from '@/shared/ui/Checkbox';
 import { Badge } from '@/shared/ui/Badge';
-
 import styles from './HeaderBoard.module.scss';
 
 const NEW_COLUMN_ALIAS = 'new';
