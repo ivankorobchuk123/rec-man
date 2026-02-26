@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { smartMatch } from '@/shared/lib/search/fuzzyMatch';
 import type { RootState } from '../index';
 import type { ColumnDto, TaskEntity } from '@/app/store/mock';
 
@@ -64,17 +65,21 @@ export const selectFilteredBoardData = createSelector(
       }
     }
 
-    const query = searchQuery.trim().toLowerCase();
+    const query = searchQuery.trim();
+
+    const taskMatchesQuery = (item: TaskEntity): boolean => {
+      if (!query) return true;
+      const title = item.title ?? '';
+      const comments = item.comments ?? '';
+      const assigneeName = item.assignee?.name ?? '';
+      const searchableText = [title, comments, assigneeName].filter(Boolean).join(' ');
+      return smartMatch(searchableText, query);
+    };
 
     return filteredColumns.map((col) => {
       const regularTasks = tasks
         .filter((item) => item.columnAlias === col.alias)
-        .filter(
-          (item) =>
-            !query ||
-            (item.title ?? '').toLowerCase().includes(query) ||
-            (item.comments ?? '').toLowerCase().includes(query)
-        )
+        .filter(taskMatchesQuery)
         .sort((a, b) => a.order - b.order);
 
       const completedTasks = showCompleted

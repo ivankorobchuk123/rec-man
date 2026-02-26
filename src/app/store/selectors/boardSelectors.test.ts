@@ -144,6 +144,47 @@ describe('selectFilteredBoardData', () => {
     expect(result[0].tasks).toHaveLength(1);
   });
 
+  it('smart search: matches when all words present in any order', () => {
+    const state = makeState({
+      columns: [makeColumn('new')],
+      tasks: [
+        makeTask(1, 'new', 0, 'Fix login bug'),
+        makeTask(2, 'new', 1, 'Add dark mode'),
+      ],
+      searchQuery: 'bug fix',
+    });
+    const result = selectFilteredBoardData(state);
+    expect(result[0].tasks).toHaveLength(1);
+    expect(result[0].tasks[0].id).toBe(1);
+  });
+
+  it('smart search: matches by subsequence (abbreviations)', () => {
+    const state = makeState({
+      columns: [makeColumn('new')],
+      tasks: [
+        makeTask(1, 'new', 0, 'Fix login bug'),
+        makeTask(2, 'new', 1, 'Add dark mode'),
+      ],
+      searchQuery: 'flb',
+    });
+    const result = selectFilteredBoardData(state);
+    expect(result[0].tasks).toHaveLength(1);
+    expect(result[0].tasks[0].id).toBe(1);
+  });
+
+  it('smart search: matches by assignee name', () => {
+    const state = makeState({
+      columns: [makeColumn('new')],
+      tasks: [
+        makeTask(1, 'new', 0, 'Task A'),
+        makeTask(2, 'new', 1, 'Task B'),
+      ],
+      searchQuery: 'John',
+    });
+    const result = selectFilteredBoardData(state);
+    expect(result[0].tasks).toHaveLength(2);
+  });
+
   describe('showCompleted', () => {
     it('completedTasks is empty when showCompleted is false', () => {
       const state = makeState({
