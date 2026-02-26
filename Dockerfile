@@ -9,20 +9,14 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Stage 2: serve with nginx
-FROM nginx:alpine
+# Stage 2: serve static files
+FROM node:22-alpine
 
-# envsubst for PORT substitution (Railway, Heroku, etc.)
-RUN apk add --no-cache gettext
+RUN npm install -g serve
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /app/dist
 
-# Template: PORT is substituted at runtime from process.env.PORT
-COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
+ENV NODE_ENV=production
+EXPOSE 3000
 
-# Use PORT from Railway or default to 80 for local runs
-ENV PORT=80
-
-EXPOSE 80
-
-CMD ["/bin/sh", "-c", "envsubst '${PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+CMD ["sh", "-c", "serve -s /app/dist -l ${PORT:-3000}"]
