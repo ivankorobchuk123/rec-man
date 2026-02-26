@@ -87,9 +87,13 @@
   overflow-y: auto;
   height: calc(100vh - 80px);
 
+  
+
   @include respond-to(mobile) {
     padding: 16px;
     height: calc(100vh - 64px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 }
