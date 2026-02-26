@@ -163,11 +163,11 @@ export function TaskDrawer({
           />
         </div>
         <div className={styles.section}>
-          <div className={styles.propertiesHeader}>Comments</div>
+          <div className={styles.propertiesHeader}>Description</div>
           <TaskComment
             text={task.comments ?? ''}
             onSave={onCommentsChange}
-            placeholder="Add a comment..."
+            placeholder="Add a description..."
           />
         </div>
       </div>

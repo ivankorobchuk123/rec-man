@@ -195,14 +195,6 @@ export function HeaderBoard() {
         </div>
         <button
           type="button"
-          className={`${styles.addColumnButton} ${showCompleted ? styles.activeButton : ''}`}
-          onClick={() => dispatch(toggleShowCompleted())}
-        >
-          <span className="material-icons-outlined">check_circle</span>
-          Completed
-        </button>
-        <button
-          type="button"
           className={styles.addColumnButton}
           onClick={() => setIsAddColumnOpen(true)}
         >

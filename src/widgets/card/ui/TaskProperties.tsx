@@ -25,6 +25,7 @@ interface TaskPropertiesProps {
   onAssigneeChange?: (assignee: AssigneeOption) => void;
   task: TaskDto;
   onStatusChange?: (status: StatusOption) => void;
+  /** Column color — overrides task.status.color for the badge */
   columnColor?: string;
 }
 
