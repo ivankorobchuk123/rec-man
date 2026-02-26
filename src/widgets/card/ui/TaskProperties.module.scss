@@ -1,3 +1,5 @@
+@import '../../../assets/styles/mixins.scss';
+
 .propertiesList {
   display: flex;
   flex-direction: column;
@@ -17,6 +19,10 @@
   width: 270px;
   font-size: 13px;
   color: var(--grey-6);
+
+  @include respond-to(mobile) {
+    width: 150px;
+  }
 
   .material-icons-outlined {
     font-size: 18px;
