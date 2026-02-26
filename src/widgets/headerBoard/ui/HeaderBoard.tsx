@@ -6,10 +6,9 @@ import {
   setSearchQuery,
   setStatusFilter,
   addTaskStartAndOpenThunk,
-  toggleShowCompleted,
 } from '@/app/store/slices/tasksSlice';
 import { selectStatusObjects } from '@/app/store/selectors/statusSelectors';
-import { selectColumns, selectShowCompleted } from '@/app/store/selectors/boardSelectors';
+import { selectColumns } from '@/app/store/selectors/boardSelectors';
 import { AddColumnPopup } from '@/features/addColumn';
 import { TaskVariant } from '@/app/store/types';
 import { Checkbox } from '@/shared/ui/Checkbox';
@@ -24,7 +23,6 @@ export function HeaderBoard() {
 
   const searchQuery = useAppSelector((state) => state.tasks.searchQuery);
   const statusFilterIds = useAppSelector((state) => state.tasks.statusFilterIds);
-  const showCompleted = useAppSelector(selectShowCompleted);
   const columns = useAppSelector(selectColumns);
   const statusObjects = useAppSelector(selectStatusObjects);
 
